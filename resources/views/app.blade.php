@@ -15,6 +15,7 @@
     </head>
     <body>
         <div id="app">
+
             <section class="hero is-dark">
                 <div class="hero-body">
                     <div class="container">
@@ -23,6 +24,23 @@
                     </div>
                 </div>
             </section>
+            <header class="nav">
+                <div class="container">
+                    <span class="nav-toggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                    <div class="nav-right nav-menu">
+                        <span class="nav-item">
+                            <a href="/cart" class="button">
+                                <img class="image is-32x32" src="image/shopping-cart.svg"/>
+                                <span class="content is-medium">&emsp;0</span>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </header>
             <section class="section">
                 <div class="container">
                     @yield('content')

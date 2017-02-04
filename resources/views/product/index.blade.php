@@ -2,6 +2,6 @@
 @section('title', 'Product list')
 @section('content')
     @foreach($products as $product)
-        @include('product.partials.card')
+        @include('product.partials.item')
     @endforeach
 @endsection
