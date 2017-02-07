@@ -9,7 +9,7 @@
         <div class="content is-medium">
             <p class="title is-4">
                 <strong>{{ $product->title }}</strong>
-                <span>&#8226</span>
+                <span>&#8226;</span>
                 @if($product->outOfStock())
                     <span class="tag is-danger">Out of stock</span>
                 @elseif($product->hasLowStock())
@@ -24,10 +24,21 @@
 
     <div class="media-right">
             <div class="level-right">
-                <p class="tag is-warning is-large level-item">${{ $product->price }}</p>
+                <p class="tag is-large level-item {{ $product->outOfStock() ? '' : 'is-warning' }}">
+                    <span>${{ $product->price }}</span>
+                </p>
             </div><br>
             <div>
-                <button class="button is-medium level-right">Add to cart</button>
+                @if($cart->hasProduct($product))
+                    <a href="/cart" class="button is-medium is-primary">Show cart</a>
+                @elseif($product->outOfStock())
+                    <span></span>                   
+                @else
+                    <form action="{{ route('cart.store', $product->slug) }}" method="post">
+                        {{ csrf_field() }}
+                        <button class="button is-medium level-right">Add to cart</button>
+                    </form>
+                @endif
             </div>
     </div>
 </article>

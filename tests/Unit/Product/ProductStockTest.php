@@ -40,4 +40,14 @@ class ProductStockTest extends TestCase
         $this->assertTrue($productThree->hasLowStock());
         $this->assertFalse($productFour->hasLowStock());
     }
+
+    /** @test */
+    public function product_has_stock_of_defined_quantity()
+    {
+        $product = factory(Product::class)->create(['stock' => 1]);
+
+        $this->assertTrue($product->hasStock(0));
+        $this->assertTrue($product->hasStock(1));
+        $this->assertFalse($product->hasStock(2));
+    }
 }
