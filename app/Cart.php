@@ -4,18 +4,15 @@ namespace App;
 
 use App\Product;
 use App\Exceptions\ProductIsOutOfStock;
+use App\Support\Storage\SessionStorage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 
 class Cart extends Model
 {
-    public function __construct()
+    public function __construct(SessionStorage $storage)
     {
-        $this->name = 'cart';
-
-        if(! session()->exists($this->name)) { 
-            session([$this->name => []]);
-        }
+        $this->storage = $storage;
     }
 
     /**
@@ -26,17 +23,7 @@ class Cart extends Model
      */
     public function getProduct(Product $product)
     {
-        return session($this->key($product->id));
-    }
-
-    /**
-     * Get name of the cart bucket.
-     * 
-     * @param  integer $productId
-     * @return string
-     */
-    protected function key($productId) {
-        return "{$this->name}.$productId";
+        return $this->storage->get($product->id);
     }
 
     /**
@@ -47,11 +34,7 @@ class Cart extends Model
      */
     public function hasProduct(Product $product)
     {
-        if(! session()->has($this->name)) {
-            return false;
-        }
-
-        return array_has(session($this->name), $product->id);
+        return $this->storage->has($product->id);
     }
 
     /**
@@ -87,7 +70,7 @@ class Cart extends Model
             return;
         }
 
-        session()->put($this->key($product->id), [
+        $this->storage->put($product->id, [
             'product_id' => $product->id,
             'quantity' => $quantity
         ]);
@@ -101,9 +84,7 @@ class Cart extends Model
      */
     public function removeProduct(Product $product)
     {
-        if($this->hasProduct($product)) {
-            session()->forget($this->key($product->id));
-        }
+        $this->storage->forget($product->id);
     }
 
     /**
@@ -114,7 +95,7 @@ class Cart extends Model
      */
     public function getQuantity(Product $product)
     {
-        return $this->getProduct($product)['quantity'];        
+        return $this->storage->get($product->id)['quantity'];
     }
 
     /**
@@ -124,11 +105,11 @@ class Cart extends Model
      */
     public function getAllProducts()
     {
-        if(! is_array(session($this->name))) {
+        if(! is_array($this->storage->all())) {
             return [];
         }
-        
-        $ids = array_keys(session($this->name));
+
+        $ids = array_keys($this->storage->all());
 
         $products = Product::whereIn('id', $ids)->get();
 
@@ -146,9 +127,7 @@ class Cart extends Model
      * @return integer
      */
     public function countProducts() {
-        return array_reduce(session($this->name), function($sum, $product) {
-            return $sum + $product['quantity'];
-        }, 0);
+        return $this->storage->count();
     }
 
     /**

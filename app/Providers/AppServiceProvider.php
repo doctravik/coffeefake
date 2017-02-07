@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Cart;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
         \App\Product::observe(\App\Observers\ProductObserver::class);
 
         view()->composer(['app', 'cart.index', 'cart.index2', 'product.index'], function($view) {
-            $cart = new \App\Cart();
+            $cart = resolve(Cart::class);
             $view->with('cart', $cart);
         });
     }
@@ -28,6 +29,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(Cart::class, function() {
+            return (new Cart(new \App\Support\Storage\SessionStorage));
+        });
     }
 }

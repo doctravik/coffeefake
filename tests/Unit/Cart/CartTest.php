@@ -16,7 +16,7 @@ class CartTest extends TestCase
     public function it_can_define_quantity_of_the_certain_product_in_the_cart()
     {
         $product = factory(Product::class)->create(['stock' => 5]);
-        $cart = new Cart();
+        $cart = resolve(Cart::class);
 
         $cart->addProduct($product, 4);
 
@@ -29,7 +29,7 @@ class CartTest extends TestCase
         $productOne = factory(Product::class)->create();
         $productTwo = factory(Product::class)->create();
         $productThree = factory(Product::class)->create();
-        $cart = new Cart();
+        $cart = resolve(Cart::class);
 
         $cart->addProduct($productOne);
         $cart->addProduct($productTwo);
@@ -47,7 +47,7 @@ class CartTest extends TestCase
     {
         $productOne = factory(Product::class)->create(['stock' => 1]);
         $productTwo = factory(Product::class)->create(['stock' => 1]);
-        $cart = new Cart();
+        $cart = resolve(Cart::class);
 
         $cart->addProduct($productOne);
 
@@ -64,7 +64,7 @@ class CartTest extends TestCase
     public function it_doesnt_allow_add_product_to_cart_if_it_is_out_of_stock()
     {
         $product = factory(Product::class)->create(['stock' => 1]);
-        $cart = new Cart();
+        $cart = resolve(Cart::class);
 
         $cart->addProduct($product, 2);
     }
@@ -73,7 +73,7 @@ class CartTest extends TestCase
     public function it_can_remove_product_from_cart()
     {
         $product = factory(Product::class)->create(['stock' => 1]);
-        $cart = new Cart();
+        $cart = resolve(Cart::class);
 
         $cart->addProduct($product);
         $cart->removeProduct($product);
@@ -85,7 +85,7 @@ class CartTest extends TestCase
     public function it_do_nothing_when_remove_product_that_isnt_in_the_cart()
     {
         $product = factory(Product::class)->create(['stock' => 1]);
-        $cart = new Cart();
+        $cart = resolve(Cart::class);
 
         $cart->removeProduct($product);
 
@@ -97,7 +97,7 @@ class CartTest extends TestCase
     {
         $productOne = factory(Product::class)->create(['stock' => 5]);
         $productTwo = factory(Product::class)->create(['stock' => 5]);
-        $cart = new Cart();
+        $cart = resolve(Cart::class);
 
         $cart->addProduct($productOne, 1);
         $cart->addProduct($productTwo, 2);
@@ -110,7 +110,7 @@ class CartTest extends TestCase
     {
         $productOne = factory(Product::class)->create(['stock' => 5, 'price' => 5]);
         $productTwo = factory(Product::class)->create(['stock' => 5, 'price' => 2]);
-        $cart = new Cart();
+        $cart = resolve(Cart::class);
 
         $cart->addProduct($productOne, 1);
         $cart->addProduct($productTwo, 2);
