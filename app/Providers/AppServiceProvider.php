@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Cart;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,9 +17,13 @@ class AppServiceProvider extends ServiceProvider
     {
         \App\Product::observe(\App\Observers\ProductObserver::class);
 
-        view()->composer(['app', 'cart.index', 'cart.index2', 'product.index'], function($view) {
+        view()->composer('*', function($view) {
             $cart = resolve(Cart::class);
             $view->with('cart', $cart);
+        });
+
+        view()->composer('layouts.nav', function($view) {
+            $view->with('route', Route::currentRouteName());
         });
     }
 

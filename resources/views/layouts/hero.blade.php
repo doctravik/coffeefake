@@ -5,4 +5,9 @@
             <h2 class="subtitle">There is no coffee here. But there is some knowledge.</h2>
         </div>
     </div>
+    <div class="hero-foot">
+        <div class="container">
+            @include('layouts.nav')
+        </div>
+    </div>
 </section>

@@ -8,7 +8,9 @@
     <div class="media-content">
         <div class="content is-medium">
             <p class="title is-4">
-                <strong>{{ $product->title }}</strong>
+                <a href="{{ route('product.show', $product->slug) }}">
+                    <strong>{{ $product->title }}</strong>
+                </a>
                 <span>&#8226;</span>
                 @if($product->outOfStock())
                     <span class="tag is-danger">Out of stock</span>
@@ -32,7 +34,7 @@
                 @if($cart->hasProduct($product))
                     <a href="/cart" class="button is-medium is-primary">Show cart</a>
                 @elseif($product->outOfStock())
-                    <span></span>                   
+                    <span></span>
                 @else
                     <form action="{{ route('cart.store', $product->slug) }}" method="post">
                         {{ csrf_field() }}

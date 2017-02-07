@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ config('app.name') }} - @yield('title')</title>
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-        <link href="css/app.css" rel="stylesheet" type="text/css">
+        <link href="/css/app.css" rel="stylesheet" type="text/css">
         <script>
             window.Laravel = <?php echo json_encode([
                 'csrfToken' => csrf_token(),
@@ -15,8 +15,7 @@
     </head>
     <body>
         <div id="app">
-            @include('layouts.hero')  
-            @include('layouts.nav')
+            @include('layouts.hero')
 
             <section class="section">
                 <div class="container">
@@ -25,6 +24,6 @@
             </section>
 
         </div>
-        <script src="js/app.js"></script>
+        <script src="/js/app.js"></script>
     </body>
 </html>

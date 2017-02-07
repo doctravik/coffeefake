@@ -1,17 +1,23 @@
-<nav class="nav">
-    <div class="container">
-        <span class="nav-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </span>
-        <div class="nav-right nav-menu">
-            <span class="nav-item">
-                <a href="/cart" class="button is-large">
-                    <img class="image is-32x32" src="image/shopping-cart.svg"/>
-                    <span class="content is-medium">&emsp; {{ $cart->countProducts() }}</span>
-                </a>
-            </span>
+<div class="columns is-mobile">
+    <div class="column">
+        <div class="tabs is-boxed">
+            <ul>
+                <li class="{{ $route === 'product.index' ? 'is-active' : '' }}">
+                    <a href="{{ route('product.index') }}" class="content is-medium is-marginless">Products</a>
+                </li>
+            </ul>
         </div>
     </div>
-</nav>
+    <div class="column">
+        <div class="tabs is-boxed is-right">
+            <ul>
+                <li>
+                    <a href="{{ route('cart.index') }}" class="content is-medium is-marginless">
+                        <img class="image is-24x24" src="/image/shopping-cart.svg"/>
+                        <span>&emsp; ({{ $cart->countProducts() }})</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
