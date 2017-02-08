@@ -22,3 +22,6 @@ Route::get('/cart', 'CartController@index')->name('cart.index');
 Route::post('/cart/{product}', 'CartController@store')->name('cart.store');
 Route::delete('/cart/{product}', 'CartController@destroy')->name('cart.destroy');
 Route::patch('/cart/{product}', 'CartController@update')->name('cart.update');
+
+Route::get('/address/create', 'AddressController@create')->name('address.create');
+Route::post('/address', 'AddressController@store')->name('address.store');
