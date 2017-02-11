@@ -7,7 +7,7 @@ use App\Order;
 use App\Address;
 use App\Customer;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreOrderRequest;
+use App\Http\Requests\OrderForm;
 
 class OrderController extends Controller
 {
@@ -39,18 +39,11 @@ class OrderController extends Controller
      * @param  StoreOrderRequest $request
      * @return Response
      */
-    public function store(StoreOrderRequest $request)
+    public function store(OrderForm $form)
     {
         $products = $this->cart->getAllProducts();
-        $customer = Customer::persist($request->only(['name', 'email']));
-        $address = Address::persist($request->only(['country', 'city', 'address1', 'address2','postal_code']));
 
-        $order = Order::create([
-            'hash' => bin2hex(random_bytes(32)),
-            'subtotal' => $this->cart->subtotal($products),
-            'customer_id' => $customer->id,
-            'address_id' => $address->id
-        ]);
+        $order = $form->save($this->cart->subtotal($products));
 
         $order->addProduct($products);
 
