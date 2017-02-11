@@ -61,9 +61,7 @@ class CartController extends Controller
             return redirect()->back();
         }
 
-        $action = request('action');
-
-        if($action == 'minus') {
+        if(request('action') == 'minus') {
             $quantity = request('quantity') - 1;
         } else {
             $quantity = request('quantity') + 1;
@@ -87,6 +85,18 @@ class CartController extends Controller
     public function destroy(Product $product)
     {
         $this->cart->removeProduct($product);
+
+        return redirect()->route('cart.index');
+    }
+
+    /**
+     * Clear cart from all products.
+     * 
+     * @return Response
+     */
+    public function clear()
+    {
+        $this->cart->clear();
 
         return redirect()->route('cart.index');
     }

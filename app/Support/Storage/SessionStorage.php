@@ -2,8 +2,13 @@
 
 namespace App\Support\Storage;
 
-class SessionStorage
+use App\Support\Storage\StorageInterface;
+
+class SessionStorage implements StorageInterface
 {
+    /**
+     * Create new instance of the SessionStorage
+     */
     public function __construct()
     {
         $this->name = 'cart';
@@ -13,6 +18,12 @@ class SessionStorage
         }        
     }
 
+    /**
+     * Get value by key.
+     * 
+     * @param  string $index
+     * @return mixed
+     */
     public function get($index)
     {
         return session($this->key($index));
@@ -28,6 +39,12 @@ class SessionStorage
         return "{$this->name}.$key";
     }
 
+    /**
+     * Whether storage has the key.
+     * 
+     * @param  string  $index
+     * @return boolean
+     */
     public function has($index)
     {
         if(! session()->has($this->name)) {
@@ -37,11 +54,24 @@ class SessionStorage
         return array_has(session($this->name), $index);
     }
 
+    /**
+     * Set value to the item.
+     * 
+     * @param  string $index
+     * @param  mixed $value
+     * @return void
+     */
     public function put($index, $value)
     {
         session()->put($this->key($index), $value);        
     }
 
+    /**
+     * Remove item from storage.
+     * 
+     * @param  string $index
+     * @return void
+     */
     public function forget($index)
     {
         if($this->has($index)) {
@@ -49,15 +79,33 @@ class SessionStorage
         }
     }
 
+    /**
+     * Get all items from the storage.
+     * 
+     * @return array
+     */
     public function all()
     {        
         return session($this->name);
     }
 
+    /**
+     * Count all items in the storage.
+     * 
+     * @return integer
+     */
     public function count()
     {
-        return array_reduce(session($this->name), function($sum, $item) {
-            return $sum + $item['quantity'];
-        }, 0);
+        return count(session($this->name));
+    }
+
+    /**
+     * Clear storage from all items.
+     * 
+     * @return void
+     */
+    public function clear()
+    {
+        session([$this->name => []]);
     }
 }

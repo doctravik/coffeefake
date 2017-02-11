@@ -23,7 +23,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Route::bind('order', function($hash) {
+            return \App\Order::where('hash', $hash)->firstOrFail();
+        });
 
         parent::boot();
     }

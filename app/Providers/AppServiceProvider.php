@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('cart', $cart);
         });
 
-        view()->composer('layouts.nav', function($view) {
+        view()->composer(['layouts.nav', 'order.partials.menu', 'auth.partials.menu'], function($view) {
             $view->with('route', Route::currentRouteName());
         });
     }

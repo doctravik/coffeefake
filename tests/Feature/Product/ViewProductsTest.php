@@ -22,4 +22,26 @@ class ViewProductsTest extends TestCase
         $response->assertStatus(200);
         $response->assertViewHas('products');
     }
+
+    /** @test */
+    public function home_page_test()
+    {
+        factory(Product::class)->create();
+
+        $response = $this->get('/home');
+
+        $response->assertStatus(200);
+        $response->assertViewHas('products');   
+    }
+
+    /** @test */
+    public function root_page_test()
+    {
+        factory(Product::class)->create();
+
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
+        $response->assertViewHas('products');   
+    }
 }

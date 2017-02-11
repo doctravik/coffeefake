@@ -82,6 +82,71 @@ class CartTest extends TestCase
     }
 
     /** @test */
+    public function it_can_remove_all_product_from_cart()
+    {
+        $productOne = factory(Product::class)->create(['stock' => 1]);
+        $productTwo = factory(Product::class)->create(['stock' => 1]);
+        $cart = resolve(Cart::class);
+        $cart->addProduct($productOne);
+        $cart->addProduct($productTwo);
+
+        $cart->clear();
+
+        $this->assertEquals(0, $cart->countProducts());
+    }
+
+    /** @test */
+    public function it_can_increase_quantity_of_product()
+    {
+        $product = factory(Product::class)->create(['stock' => 2]);
+        $cart = resolve(Cart::class);
+        $cart->addProduct($product);
+
+        $cart->updateProduct($product, 2);
+
+        $this->assertEquals(2, $cart->countProducts());
+    }
+
+    /** 
+     * @test
+     * @expectedException App\Exceptions\ProductIsOutOfStock
+     */
+    public function it_doesnt_update_product_if_it_is_out_of_stock()
+    {
+        $product = factory(Product::class)->create(['stock' => 2]);
+        $cart = resolve(Cart::class);
+        $cart->addProduct($product);
+
+        $cart->updateProduct($product, 3);
+
+        $this->assertEquals(1, $cart->countProducts());
+    }
+
+    /** @test */
+    public function it_can_decline_quantity_of_product()
+    {
+        $product = factory(Product::class)->create(['stock' => 5]);
+        $cart = resolve(Cart::class);
+        $cart->addProduct($product, 5);
+
+        $cart->updateProduct($product, 2);
+
+        $this->assertEquals(2, $cart->countProducts());
+    }
+
+    /** @test */
+    public function it_remove_product_if_it_count_is_zero()
+    {
+        $product = factory(Product::class)->create(['stock' => 5]);
+        $cart = resolve(Cart::class);
+        $cart->addProduct($product);
+
+        $cart->updateProduct($product, 0);
+
+        $this->assertEquals(0, $cart->countProducts());
+    }
+
+    /** @test */
     public function it_do_nothing_when_remove_product_that_isnt_in_the_cart()
     {
         $product = factory(Product::class)->create(['stock' => 1]);

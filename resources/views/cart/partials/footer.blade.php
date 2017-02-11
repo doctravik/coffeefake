@@ -10,8 +10,19 @@
 <div class="level">
     <div class="level-left"></div>
     <div class="level-right">
-       <div class="level-item">
+        <div class="level-item">
             <a href="/products">Back to shopping</a>
+        </div>
+    </div>
+</div>
+<div class="level">
+    <div class="level-left"></div>
+    <div class="level-right">
+       <div class="level-item">
+            <form action="{{ url('/cart/clear') }}" method="POST">
+                {{ csrf_field() }}
+                <button class="button">Clear cart</button>
+            </form>
         </div>
     </div>
 </div>

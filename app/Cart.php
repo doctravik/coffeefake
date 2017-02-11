@@ -4,13 +4,13 @@ namespace App;
 
 use App\Product;
 use App\Exceptions\ProductIsOutOfStock;
-use App\Support\Storage\SessionStorage;
 use Illuminate\Database\Eloquent\Model;
+use App\Support\Storage\StorageInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 class Cart extends Model
 {
-    public function __construct(SessionStorage $storage)
+    public function __construct(StorageInterface $storage)
     {
         $this->storage = $storage;
     }
@@ -88,6 +88,16 @@ class Cart extends Model
     }
 
     /**
+     * Remove product from the cart.
+     * 
+     * @return void
+     */
+    public function clear()
+    {
+        $this->storage->clear();
+    }
+
+    /**
      * Get quantity of the product in the cart.
      * 
      * @param  Product $product
@@ -122,12 +132,14 @@ class Cart extends Model
     }
 
     /**
-     * Count the product in the cart.
+     * Count the products in the cart.
      * 
      * @return integer
      */
     public function countProducts() {
-        return $this->storage->count();
+        return array_reduce($this->storage->all(), function($sum, $product) {
+            return $sum + $product['quantity'];
+        }, 0);
     }
 
     /**
