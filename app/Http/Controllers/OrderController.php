@@ -24,7 +24,7 @@ class OrderController extends Controller
     public function create()
     {
         if($this->cart->countProducts() <= 0) {
-            return redirect()->back();
+            return redirect()->route('cart.index');
         }
 
         return view('order.create')->with([
