@@ -8,6 +8,8 @@ use App\Address;
 use App\Product;
 use App\Customer;
 use Tests\TestCase;
+use App\Billing\PaymentGateway;
+use App\Billing\FakePaymentGateway;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -40,9 +42,12 @@ class CreateOrderTest extends TestCase
     /** @test */
     public function it_can_store_order()
     {
-        $product = factory(Product::class)->create();
+        $paymentGateway = new FakePaymentGateway();
+        $this->app->instance(PaymentGateway::class, $paymentGateway);
+        $product = factory(Product::class)->create(['stock' => 10]);
         $cart = resolve(Cart::class);
-        $cart->addProduct($product);
+        $cart->addProduct($product, 2);
+        $subtotal = $cart->subTotal();
 
         $response = $this->post('/order', [
             'name' => 'John Doe',
@@ -53,13 +58,15 @@ class CreateOrderTest extends TestCase
             'address2' => 'apartment 55',
             'postal_code' => '00000'
         ]);
-        $order = Order::first();
 
+        $order = Order::first();
         $response->assertRedirect("/order/{$order->hash}");
+
         $this->assertDatabaseHas('customers', [
             'name' => 'John Doe',
             'email' => 'doe@example.com'
         ]);
+
         $this->assertDatabaseHas('addresses', [
             'country' => 'USA',
             'city' => 'Washington DC',
@@ -67,17 +74,30 @@ class CreateOrderTest extends TestCase
             'address2' => 'apartment 55',
             'postal_code' => '00000'
         ]);
+
         $this->assertDatabaseHas('orders', [
-            'paid' => 0,
-            'subtotal' => $cart->subtotal(),
+            'paid' => true,
+            'subtotal' => $subtotal,
             'customer_id' => Customer::first()->id,
             'address_id' => Address::first()->id
         ]);
+
         $this->assertDatabaseHas('order_product', [
             'order_id' => $order->id,
             'product_id' => $product->id,
-            'quantity' => 1
+            'quantity' => 2
         ]);
+
+        $this->assertDatabaseHas('payments', [
+            'success' => true,
+            'order_id' => $order->id,
+            'amount' => $subtotal,
+            'transaction_id' => 'valid_id'
+        ]);
+
+        $this->assertEquals(8, $product->fresh()->stock);
+
+        $this->assertEquals(0, $cart->countProducts());
     }
 
     /** @test */

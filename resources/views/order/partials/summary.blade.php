@@ -10,7 +10,7 @@
                             <span class="help is-primary">x{{ $product->quantity }}</span>
                         </div>
                     </div>
-                    <div class="column is-narrow has-text-right">${{number_format($product->price, 2) }}</div>
+                    <div class="column is-narrow has-text-right">{{ $product->priceInDollars() }}</div>
                 </div>
             @endforeach
             <hr>
@@ -19,11 +19,11 @@
                     <b>Subtotal ({{ $cart->countProducts() }} items)</b>
                 </div>
                 <div class="column is-narrow has-text-right">
-                    <b>${{ number_format($cart->subTotal($products), 2) }}</b>
+                    <b>${{ number_format($cartSubtotal/100, 2) }}</b>
                 </div>
             </div>
 
-            <button class="button is-success is-fullwidth is-medium">Place order</button></td>
+            <button type="sumbit" class="button is-success is-fullwidth is-medium" id="payOrder">Pay order</button>
         </div>
     </div>
 </nav>

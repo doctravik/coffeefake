@@ -2,7 +2,7 @@
     <div class="column"><b>Total</b></div>
     <div class="column has-text-right"><b>-</b></div>
     <div class="column has-text-right"><b>{{ $cart->countProducts() }} items</b></div>
-    <div class="column has-text-right is-hidden-mobile"><b>${{ number_format($cart->subTotal($products), 2) }}</b></div>
+    <div class="column has-text-right is-hidden-mobile"><b>${{ number_format($cart->subTotal($products) / 100, 2) }}</b></div>
 </div><br>
 
 @include('cart.partials.subtotal')

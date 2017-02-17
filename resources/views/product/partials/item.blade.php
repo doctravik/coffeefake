@@ -25,22 +25,22 @@
     </div>
 
     <div class="media-right">
-            <div class="level-right">
-                <p class="tag is-large level-item {{ $product->outOfStock() ? '' : 'is-warning' }}">
-                    <span>${{ $product->price }}</span>
-                </p>
-            </div><br>
-            <div>
-                @if($cart->hasProduct($product))
-                    <a href="/cart" class="button is-medium is-primary">Show cart</a>
-                @elseif($product->outOfStock())
-                    <span></span>
-                @else
-                    <form action="{{ route('cart.store', $product->slug) }}" method="post">
-                        {{ csrf_field() }}
-                        <button class="button is-medium level-right">Add to cart</button>
-                    </form>
-                @endif
-            </div>
+        <div class="level-right">
+            <p class="tag is-large level-item {{ $product->outOfStock() ? '' : 'is-warning' }}">
+                <span>{{ $product->priceInDollars() }}</span>
+            </p>
+        </div><br>
+        <div>
+            @if($cart->hasProduct($product))
+                <a href="/cart" class="button is-medium is-primary">Show cart</a>
+            @elseif($product->outOfStock())
+                <span></span>
+            @else
+                <form action="{{ route('cart.store', $product->slug) }}" method="post">
+                    {{ csrf_field() }}
+                    <button class="button is-medium level-right">Add to cart</button>
+                </form>
+            @endif
+        </div>
     </div>
 </article>

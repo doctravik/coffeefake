@@ -16,7 +16,7 @@ class Order extends Model
     /**
      * Order belongs to Customer.
      * 
-     * @return \Illuminate\Eloquent\Relation\belongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function customer()
     {
@@ -26,7 +26,7 @@ class Order extends Model
     /**
      * Order belongs to Address.
      * 
-     * @return \Illuminate\Eloquent\Relation\belongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function address()
     {
@@ -36,7 +36,7 @@ class Order extends Model
     /**
      * Order has many Products.
      * 
-     * @return \Illuminate\Eloquent\Relation\belongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function products()
     {
@@ -74,5 +74,67 @@ class Order extends Model
             $carry[$product->id] = ['quantity' => $product->quantity];
             return $carry;
         }, []);
+    }
+
+    /**
+     * Pay order.
+     * 
+     * @return void
+     */
+    public function pay()
+    {
+        $this->paid = true;
+
+        $this->save();        
+    }
+
+    /**
+     * Whether order is paid.
+     * 
+     * @return boolean
+     */
+    public function isPaid()
+    {
+        return $this->paid;
+    }
+
+    /**
+     * Order has many payments.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    /**
+     * Record successful payment.
+     * 
+     * @param  string $id
+     * @param  integer $amount
+     * @return Model
+     */
+    public function recordSuccessfulPayment($id, $amount)
+    {
+        return $this->payments()->create([
+            'transaction_id' => $id,
+            'amount' => $amount,
+            'success' => true
+        ]);
+    }
+
+    /**
+     * Record failed payment.
+     *
+     * @param  integer $amount
+     * @return Model
+     */
+    public function recordFailedPayment($amount)
+    {
+        return $this->payments()->create([
+            'amount' => $amount,
+            'success' => false
+        ]);
     }
 }

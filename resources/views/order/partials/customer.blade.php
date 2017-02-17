@@ -21,7 +21,7 @@
                 </div>
                 <div class="control is-grouped">
                     <p class="control is-expanded">
-                        <input class="input" type="text" name="email" placeholder="email" value="{{ old('email') }}">
+                        <input class="input" id="customer_email" type="text" name="email" placeholder="email" value="{{ old('email') }}">
                         <span class="help is-danger">{{ $errors->first('email') }}</span>
                     </p>
                 </div>

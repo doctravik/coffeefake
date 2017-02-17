@@ -12,9 +12,7 @@
             </p>
         </div>
 
-        <div class="column has-text-right content is-medium">
-            {{ $product->price }}
-        </div>
+        <div class="column has-text-right content is-medium">{{ $product->priceInDollars() }}</div>
 
         <div class="column content is-medium">
             <div class="control is-pulled-right is-grouped">
@@ -39,7 +37,7 @@
         </div>
 
         <div class="column has-text-right content is-medium is-hidden-mobile">
-            ${{ number_format($product->price * $product->quantity, 2) }}
+            ${{ number_format($product->price * $product->quantity/100, 2) }}
         </div>
     </div>
 @endforeach

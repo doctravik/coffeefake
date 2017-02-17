@@ -56,4 +56,14 @@ class Product extends Model
     {
         return $this->stock >= $quantity;
     }
+
+    /**
+     * Format price in dollars.
+     * 
+     * @return string
+     */
+    public function priceInDollars()
+    {
+        return '$' . number_format($this->price / 100, 2);
+    }
 }

@@ -53,4 +53,46 @@ class OrderTest extends TestCase
         ]);
         $this->assertEquals(2, \DB::table('order_product')->count());
     }
+
+    /** @test */
+    public function it_can_record_successfull_payment()
+    {
+        $order = factory(Order::class)->create();
+
+        $order->recordSuccessfulPayment('transaction_id', 2000);
+
+        $this->assertCount(1, $order->payments);
+        $this->assertDatabaseHas('payments', [
+            'success' => true,
+            'order_id' => $order->id,
+            'amount' => 2000,
+            'transaction_id' => 'transaction_id',
+        ]);
+    }
+
+    /** @test */
+    public function it_can_record_failed_payment()
+    {
+        $order = factory(Order::class)->create();
+
+        $order->recordFailedPayment(2000);
+
+        $this->assertCount(1, $order->payments);
+        $this->assertDatabaseHas('payments', [
+            'success' => false,
+            'order_id' => $order->id,
+            'amount' => 2000,
+            'transaction_id' => null
+        ]);
+    }
+
+    /** @test */
+    public function it_can_pay_order()
+    {
+        $order = factory(Order::class)->create(['paid' => false]);
+
+        $order->pay();
+
+        $this->assertTrue($order->isPaid());
+    }
 }

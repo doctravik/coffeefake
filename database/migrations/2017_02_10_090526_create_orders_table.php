@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->string('hash');
             $table->boolean('paid')->default(false);
-            $table->decimal('subtotal', 5, 2);
+            $table->integer('subtotal');
             $table->integer('customer_id')->unsigned();
             $table->integer('address_id')->unsigned();
             $table->timestamps();

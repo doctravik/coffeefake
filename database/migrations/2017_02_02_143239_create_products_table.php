@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->string('image')->default('https://placeholdit.imgix.net/~text?txtsize=25&txt=Product+image&w=256&h=256');
-            $table->decimal('price', 5, 2);
+            $table->integer('price');
             $table->integer('stock');
             $table->string('slug');
             $table->timestamps();

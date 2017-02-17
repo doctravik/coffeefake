@@ -7,13 +7,22 @@ use App\Order;
 use App\Address;
 use App\Customer;
 use Illuminate\Http\Request;
+use App\Billing\PaymentGateway;
+use App\Events\OrderWasCreated;
+use App\Events\PaymentWasFailed;
 use App\Http\Requests\OrderForm;
+use App\Events\PaymentWasSuccessful;
 
 class OrderController extends Controller
 {
-    public function __construct(Cart $cart)
+    private $cart;
+    private $paymentGateway;
+
+    public function __construct(Cart $cart, PaymentGateway $paymentGateway)
     {
         $this->cart = $cart;
+
+        $this->paymentGateway = $paymentGateway;
     }
 
     /**
@@ -27,9 +36,12 @@ class OrderController extends Controller
             return redirect()->route('cart.index');
         }
 
+        $products = $this->cart->getAllProducts();
+
         return view('order.create')->with([
             'cart' => $this->cart,
-            'products' => $this->cart->getAllProducts()
+            'products' => $products,
+            'cartSubtotal' => $this->cart->subTotal($products)
         ]);
     }
 
@@ -42,10 +54,20 @@ class OrderController extends Controller
     public function store(OrderForm $form)
     {
         $products = $this->cart->getAllProducts();
+        $subtotal = $this->cart->subtotal($products);
 
-        $order = $form->save($this->cart->subtotal($products));
-
+        $order = $form->save($subtotal);
         $order->addProduct($products);
+
+        try {
+            $charge = $this->paymentGateway->charge($subtotal, request('stripeToken'));
+        } catch (\Exception $e) {
+            event(new PaymentWasFailed($order, $charge->amount));
+            return back()->withErrors(['billing' => $e->getMessage()]);
+        }
+
+        event(new OrderWasCreated($order, $this->cart));
+        event(new PaymentWasSuccessful($order, $charge->id, $charge->amount));
 
         return redirect()->route('order.show', ['hash' => $order->hash]);
     }

@@ -24,7 +24,7 @@
             @endif
         </p>
         <p class="subtitle is-4">
-            <b>${{ $product->price }}</b>
+            <b>${{ number_format($product->price / 100, 2) }}</b>
         </p>
         <p>
             @if($cart->hasProduct($product))
