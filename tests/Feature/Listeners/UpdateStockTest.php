@@ -23,6 +23,8 @@ class UpdateStockTest extends TestCase
         $product = factory(Product::class)->create(['stock' => 10]);
         $cart = resolve(Cart::class);
         $cart->addProduct($product, 2);
+        $order->addProduct($cart->getAllProducts());
+
         $orderWasCreated = new OrderWasCreated($order, $cart);
         $updateStock = new UpdateStock();
 

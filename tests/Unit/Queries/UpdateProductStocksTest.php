@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Product;
+namespace Tests\Unit\Queries;
 
 use App\Product;
 use Tests\TestCase;
@@ -23,7 +23,7 @@ class UpdateProductStocksTest extends TestCase
         (new UpdateProductStocks($products))->update();
 
         $products->each(function($product) {
-            $this->assertEquals(7, $product->stock);            
+            $this->assertEquals(7, $product->stock);
         });
     }
 }
