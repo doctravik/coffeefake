@@ -21,9 +21,12 @@
 
             <section class="section">
                 <div class="container">
+                    @include('layouts.flash')
                     @yield('content')
                 </div>
             </section>
+            
+            @include('layouts.footer')
         </div>
     </body>
 </html>

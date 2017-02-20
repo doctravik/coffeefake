@@ -14,9 +14,12 @@ class ProductStockTest extends TestCase
     /** @test */
     public function product_quantity_is_out_of_stock()
     {
-        $product = factory(Product::class)->create(['stock' => 0]);
+        $productOne = factory(Product::class)->create(['stock' => -1]);
+        $productTwo = factory(Product::class)->create(['stock' => 0]);
 
-        $this->assertTrue($product->outOfStock());
+        // dd($productOne->stock <= 0);
+        $this->assertTrue($productOne->outOfStock());
+        $this->assertTrue($productTwo->outOfStock());
     }
 
     /** @test */

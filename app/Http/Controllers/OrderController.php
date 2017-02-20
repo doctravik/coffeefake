@@ -69,7 +69,10 @@ class OrderController extends Controller
         event(new OrderWasCreated($order, $this->cart));
         event(new PaymentWasSuccessful($order, $charge->id, $charge->amount));
 
-        return redirect()->route('order.show', ['hash' => $order->hash]);
+        if(auth()->check()) {
+            return redirect()->route('order.show', ['hash' => $order->hash]);
+        }
+        return redirect()->route('home.index')->with(['status' => 'Your order was successfully proceeded!']);
     }
 
     /**
@@ -80,6 +83,8 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        $order->load(['customer', 'address', 'products']);
+
         return view('order.show', compact('order'));
     }
 }

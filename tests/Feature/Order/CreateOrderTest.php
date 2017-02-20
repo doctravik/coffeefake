@@ -60,7 +60,7 @@ class CreateOrderTest extends TestCase
         ]);
 
         $order = Order::first();
-        $response->assertRedirect("/order/{$order->hash}");
+        $response->assertStatus(302);
 
         $this->assertDatabaseHas('customers', [
             'name' => 'John Doe',

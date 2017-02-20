@@ -26,4 +26,6 @@ Route::get('/order/create', 'OrderController@create')->name('order.create');
 Route::post('/order', 'OrderController@store')->name('order.store');
 Route::get('/order/{order}', 'OrderController@show')->name('order.show');
 
+Route::post('/stripe/webhook', 'WebhookController@handle');
+
 Auth::routes();
