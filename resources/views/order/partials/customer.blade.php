@@ -9,7 +9,8 @@
                 </div>
                 <div class="control is-grouped">
                     <p class="control is-expanded">
-                        <input class="input" type="text" name="name" placeholder="name" value="{{ old('name') }}">
+                        <input class="input" type="text" name="name" placeholder="name" 
+                            value="{{ old('name', auth()->check() ? auth()->user()->name : '') }}">
                         <span class="help is-danger">{{ $errors->first('name') }}</span>
                     </p>
                 </div>
@@ -21,7 +22,8 @@
                 </div>
                 <div class="control is-grouped">
                     <p class="control is-expanded">
-                        <input class="input" id="customer_email" type="text" name="email" placeholder="email" value="{{ old('email') }}">
+                        <input class="input" id="customer_email" type="text" name="email" placeholder="email" 
+                            value="{{ old('email', auth()->check() ? auth()->user()->email : '') }}">
                         <span class="help is-danger">{{ $errors->first('email') }}</span>
                     </p>
                 </div>
