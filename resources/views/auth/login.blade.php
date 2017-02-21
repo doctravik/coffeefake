@@ -8,22 +8,21 @@
             <form action="{{ url('/login') }}" method="POST">
                 {{ csrf_field() }}
 
-                    <label class="label">Email</label>
-                    <p class="control is-expanded">
-                        <input class="input" type="text" name="email" placeholder="Email" value="{{ old('email') }}">
-                        <span class="help is-danger">{{ $errors->first('email') }}</span>
-                    </p>
+                <label class="label">Email</label>
+                <p class="control is-expanded">
+                    <input class="input" type="text" name="email" placeholder="Email" value="{{ old('email') }}">
+                    <span class="help is-danger">{{ $errors->first('email') }}</span>
+                </p>
 
-                    <label class="label">Password</label>
-                    <p class="control is-expanded">
-                        <input class="input" type="password" name="password" placeholder="Password">
-                        <span class="help is-danger">{{ $errors->first('password') }}</span>
-                    </p>
+                <label class="label">Password</label>
+                <p class="control is-expanded">
+                    <input class="input" type="password" name="password" placeholder="Password">
+                    <span class="help is-danger">{{ $errors->first('password') }}</span>
+                </p>
 
-                    <p class="control">
-                        <button class="button is-success">Login</button>
-                    </p>
-                </div>
+                <p class="control">
+                    <button class="button is-success">Login</button>
+                </p>
             </form>
         </div>
     </div>

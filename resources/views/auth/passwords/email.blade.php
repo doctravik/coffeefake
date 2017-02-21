@@ -15,16 +15,15 @@
             <form action="{{ url('/password/email') }}" method="POST">
                 {{ csrf_field() }}
 
-                    <label class="label">Email</label>
-                    <p class="control">
-                        <input class="input" type="text" name="email" placeholder="Email" value="{{ old('email') }}">
-                        <span class="help is-danger">{{ $errors->first('email') }}</span>
-                    </p>
+                <label class="label">Email</label>
+                <p class="control">
+                    <input class="input" type="text" name="email" placeholder="Email" value="{{ old('email') }}">
+                    <span class="help is-danger">{{ $errors->first('email') }}</span>
+                </p>
 
-                    <p class="control">
-                        <button class="button is-success">Send Password Reset Link</button>
-                    </p>
-                </div>
+                <p class="control">
+                    <button class="button is-success">Send Password Reset Link</button>
+                </p>
             </form>
         </div>
     </div>

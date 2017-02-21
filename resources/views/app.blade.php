@@ -15,11 +15,11 @@
         </script>
     </head>
     <body>
-        <div id="app">
+        <div id="app" class="site">
             @include('layouts.auth')
             @include('layouts.hero')
 
-            <section class="section">
+            <section class="section flex-1">
                 <div class="container">
                     @include('layouts.flash')
                     @yield('content')
