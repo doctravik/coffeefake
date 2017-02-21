@@ -182,4 +182,30 @@ class CartTest extends TestCase
 
         $this->assertEquals(9, $cart->subTotal());
     }
+
+    /** @test */
+    public function it_can_check_if_cart_is_empty()
+    {
+        $product = factory(Product::class)->create(['stock' => 5]);
+        $cart = resolve(Cart::class);
+
+        $this->assertTrue($cart->isEmpty());
+
+        $cart->addProduct($product);
+
+        $this->assertFalse($cart->isEmpty());
+    }
+
+    /** @test */
+    public function it_can_syncronizes_cart_quantity_with_stock()
+    {
+        $product = factory(Product::class)->create(['stock' => 5]);
+        $cart = resolve(Cart::class);
+        $cart->addProduct($product, 5);
+        
+        $product->forceFill(['stock' => 3])->save();
+        $cart->updateStock();
+
+        $this->assertEquals(3, $cart->getQuantity($product));
+    }
 }

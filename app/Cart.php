@@ -16,6 +16,20 @@ class Cart extends Model
     }
 
     /**
+     * Update stocks
+     * 
+     * @return void
+     */
+    public function updateStock()
+    {
+        foreach ($this->getAllProducts() as $item) {
+            if (!$item->hasStock($item->quantity)) {
+                $this->updateProduct($item, $item->stock);
+            }
+        }
+    }
+
+    /**
      * Get product from the cart.
      * 
      * @param  Product $product
@@ -159,5 +173,15 @@ class Cart extends Model
         return $items->reduce(function($sum, $product) {
             return $sum + $product->price * $product->quantity;
         }, 0);
+    }
+
+    /**
+     * Whether cart is empty.
+     * 
+     * @return boolean
+     */
+    public function isEmpty()
+    {
+        return (bool) ($this->countProducts() <= 0);
     }
 }

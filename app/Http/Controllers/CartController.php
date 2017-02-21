@@ -21,6 +21,8 @@ class CartController extends Controller
      */
     public function index()
     {
+        $this->cart->updateStock();
+        
         $products = $this->cart->getAllProducts();
 
         return view('cart.index', compact('products'));

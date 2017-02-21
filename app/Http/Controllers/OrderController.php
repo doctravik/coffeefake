@@ -32,7 +32,9 @@ class OrderController extends Controller
      */
     public function create()
     {
-        if($this->cart->countProducts() <= 0) {
+        $this->cart->updateStock();
+
+        if($this->cart->isEmpty()) {
             return redirect()->route('cart.index');
         }
 
@@ -53,6 +55,12 @@ class OrderController extends Controller
      */
     public function store(OrderForm $form)
     {
+        $this->cart->updateStock();
+
+        if($this->cart->isEmpty()) {
+            return redirect()->route('cart.index');
+        }
+
         $products = $this->cart->getAllProducts();
         $subtotal = $this->cart->subtotal($products);
 
