@@ -10,7 +10,7 @@
                 <a class="nav-item is-tab" href="{{ url('/register') }}">Sign up</a>
                 <a class="nav-item is-tab" href="{{ url('/login') }}">Login</a>
             @else
-                <a class="nav-item is-tab">{{ Auth::user()->name }}</a>
+                <a class="nav-item is-tab" href="{{ route('dashboard') }}">{{ Auth::user()->name }}</a>
                 <a class="nav-item is-tab" href="{{ url('/logout') }}" 
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">logout</a>
 

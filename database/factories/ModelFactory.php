@@ -58,3 +58,12 @@ $factory->define(App\Address::class, function (Faker\Generator $faker) {
         'postal_code' => $faker->postcode
     ];
 });
+
+$factory->define(App\Payment::class, function (Faker\Generator $faker) {
+    return [
+        'amount' => $faker->numberBetween($min = 100, $max = 500),
+        'success' => true,
+        'order_id' => factory(App\Order::class)->create()->id,
+        'transaction_id' => 'transaction_id'
+    ];
+});

@@ -26,6 +26,8 @@ Route::get('/order/create', 'OrderController@create')->name('order.create');
 Route::post('/order', 'OrderController@store')->name('order.store');
 Route::get('/order/{order}', 'OrderController@show')->name('order.show');
 
-Route::get('/dashboard', 'DashboardController@index');
+
+Route::get('/dashboard', 'UserOrderController@index')->name('dashboard');
+Route::get('/dashboard/payments', 'UserPaymentController@index')->name('dashboard.payments');
 
 Auth::routes();

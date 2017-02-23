@@ -4,6 +4,7 @@ namespace Tests\Unit\Order;
 
 use App\Order;
 use App\Product;
+use App\Customer;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -94,5 +95,19 @@ class OrderTest extends TestCase
         $order->pay();
 
         $this->assertTrue($order->isPaid());
+    }
+
+    /** @test */
+    public function it_can_find_all_orders_by_user()
+    {
+        $customerOne = factory(Customer::class)->create(['name' => 'John Doe', 'email' => 'johndoe@example.com']);
+        $customerTwo = factory(Customer::class)->create(['name' => 'Garry Doe', 'email' => 'johndoe@example.com']);
+        $orderOne = factory(Order::class)->create(['customer_id' => $customerOne->id]);
+        $orderTwo = factory(Order::class)->create(['customer_id' => $customerTwo->id]);
+
+        $orders = Order::byEmail('johndoe@example.com')->get();
+
+        $this->assertTrue($orders->contains('id', $orderOne->id));
+        $this->assertTrue($orders->contains('id', $orderTwo->id));
     }
 }

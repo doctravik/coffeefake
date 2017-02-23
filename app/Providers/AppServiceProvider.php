@@ -22,21 +22,14 @@ class AppServiceProvider extends ServiceProvider
             $view->with('cart', $cart);
         });
 
-        view()->composer(['layouts.nav', 'order.partials.menu', 'auth.partials.menu'], function($view) {
+        view()->composer([
+                'layouts.nav',
+                'dashboard.menu',
+                'order.partials.menu', 
+                'auth.partials.menu'
+            ], function($view) {
             $view->with('route', Route::currentRouteName());
         });
-
-\DB::listen(function ($query) {
-    $sqlParts = explode('?', $query->sql);
-    $bindings = $query->connection->prepareBindings($query->bindings);
-    $pdo = $query->connection->getPdo();
-    $sql = array_shift($sqlParts);
-    foreach ($bindings as $i => $binding) {
-        $sql .= $pdo->quote($binding) . $sqlParts[$i];
-    }
-    
-    \Log::info($sql);
-});
     }
 
     /**

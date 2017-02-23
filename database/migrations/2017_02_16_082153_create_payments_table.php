@@ -15,10 +15,10 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('order_id');
             $table->integer('amount');
-            $table->string('transaction_id')->nullable();
             $table->boolean('success')->nullable();
+            $table->integer('order_id')->unsigned();
+            $table->string('transaction_id')->nullable();
             $table->timestamps();
         });
     }

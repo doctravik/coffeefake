@@ -25,6 +25,11 @@ class OrderController extends Controller
         $this->paymentGateway = $paymentGateway;
     }
 
+    // public function index()
+    // {
+    //     return view    
+    // }
+
     /**
      * Show order create form.
      * 
@@ -70,7 +75,7 @@ class OrderController extends Controller
         try {
             $charge = $this->paymentGateway->charge($subtotal, request('stripeToken'));
         } catch (\Exception $e) {
-            event(new PaymentWasFailed($order, $charge->amount));
+            event(new PaymentWasFailed($order, $order->subtotal));
             return back()->withErrors(['billing' => $e->getMessage()]);
         }
 

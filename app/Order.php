@@ -137,4 +137,11 @@ class Order extends Model
             'success' => false
         ]);
     }
+
+    public function scopeByEmail($query, $email)
+    {
+        $customers = Customer::findByEmail($email);
+
+        return $query->whereIn('customer_id', $customers->pluck('id'));
+    }
 }

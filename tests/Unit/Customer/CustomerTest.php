@@ -38,4 +38,14 @@ class CustomerTest extends TestCase
         $this->assertDatabaseHas('customers', $attributes);
         $this->assertCount(1, Customer::all());   
     }
+
+    /** @test */
+    public function it_can_find_customer_by_email()
+    {
+        factory(Customer::class)->create(['email' => 'johndoe@example.com']);
+
+        $customer = Customer::findByEmail('johndoe@example.com')->first();
+
+        $this->assertNotNull($customer);
+    }
 }

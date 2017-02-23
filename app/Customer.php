@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Order;
+use App\Payment;
 use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
@@ -38,5 +39,17 @@ class Customer extends Model
         $customer->save();
 
         return $customer;
+    }
+
+    /**
+     * Scope a query to only include customers with a given email.
+     * 
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  string $email
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFindByEmail($query, $email)
+    {
+        return $query->where('email', $email);
     }
 }

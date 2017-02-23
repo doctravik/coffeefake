@@ -6,9 +6,6 @@
         <span class="tag {{ $order->isPaid() ? 'is-success' : 'is-danger' }}">{{ $order->isPaid() ? 'Paid' : 'Not paid' }}</span>
     </h1>
     <h3 class="subtitle">{{ $order->created_at->toFormattedDateString() }}</h3>
-    <div>
-
-    </div>
 
     <div class="columns">
         <div class="column">
