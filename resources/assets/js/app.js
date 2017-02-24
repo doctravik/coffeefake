@@ -13,8 +13,17 @@
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+// Vue.component('example', require('./components/Example.vue'));
 
-const app = new Vue({
-    el: '#app'
-});
+// const app = new Vue({
+//     el: '#app'
+// });
+
+let authMenu = document.getElementById('auth-menu');
+let navToggle = document.getElementById('nav-toggle');
+
+if(authMenu && navToggle) {
+    navToggle.addEventListener('click', function(event) {
+        authMenu.classList.toggle('is-active');
+    });
+}

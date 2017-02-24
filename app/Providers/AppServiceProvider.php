@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer([
                 'layouts.nav',
+                'layouts.auth',
                 'dashboard.menu',
                 'order.partials.menu', 
                 'auth.partials.menu'
