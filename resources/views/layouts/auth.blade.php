@@ -1,8 +1,9 @@
 <nav class="nav has-shadow">
     <div class="container">
         <div class="nav-left">
-            <a class="nav-item">
-                <b class="content is-medium">CoffeeFun</b>
+            <a class="nav-item" href="{{ url('/') }}">
+                <img src="/image/logo.png" class="image is-32x32" alt="CoffeeFun logo">
+                <h3 class="title is-3">&nbsp; CoffeeFun</h3>
             </a>
         </div>
         <div class="nav-right nav-menu">
