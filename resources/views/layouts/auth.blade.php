@@ -3,7 +3,7 @@
         <div class="nav-left">
             <a class="nav-item" href="{{ url('/') }}">
                 <img src="/image/logo.png" class="image is-32x32" alt="CoffeeFun logo">
-                <h3 class="title is-3">&nbsp; CoffeeFun</h3>
+                <h3 class="title is-3">&nbsp; CoffeeFake</h3>
             </a>
         </div>
         <span class="nav-toggle"  id="nav-toggle">
