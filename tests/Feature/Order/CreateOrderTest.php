@@ -61,6 +61,7 @@ class CreateOrderTest extends TestCase
 
         $order = Order::first();
         $response->assertStatus(302);
+        $response->assertSessionHas('congratulations');
 
         $this->assertDatabaseHas('customers', [
             'name' => 'John Doe',

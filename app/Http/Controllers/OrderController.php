@@ -83,9 +83,10 @@ class OrderController extends Controller
         event(new PaymentWasSuccessful($order, $charge->id, $charge->amount));
 
         if(auth()->check()) {
-            return redirect()->route('order.show', ['hash' => $order->hash]);
+            return redirect()->route('order.show', ['hash' => $order->hash])
+                ->with('congratulations', 'congratulations');
         }
-        return redirect()->route('home.index')->with(['status' => 'Your order was successfully proceeded!']);
+        return redirect()->route('home.index')->with('congratulations', 'congratulations');
     }
 
     /**

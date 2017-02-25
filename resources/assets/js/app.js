@@ -23,7 +23,21 @@ let authMenu = document.getElementById('auth-menu');
 let navToggle = document.getElementById('nav-toggle');
 
 if(authMenu && navToggle) {
-    navToggle.addEventListener('click', function(event) {
+    navToggle.addEventListener('click', function() {
         authMenu.classList.toggle('is-active');
+    });
+}
+
+let modal = document.querySelector('.modal');
+let modalClose = document.querySelector('.modal-close');
+let modalBackground = document.querySelector('.modal-background');
+
+if(modal && modalClose) {
+    modalClose.addEventListener('click', function() {
+        modal.classList.remove('is-active');
+    });
+
+    modalBackground.addEventListener('click', function() {
+        modal.classList.remove('is-active');
     });
 }

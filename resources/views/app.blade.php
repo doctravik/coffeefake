@@ -16,6 +16,7 @@
     </head>
     <body>
         <div id="app" class="site">
+            @include('layouts.modal')
             @include('layouts.auth')
             @include('layouts.hero')
 
