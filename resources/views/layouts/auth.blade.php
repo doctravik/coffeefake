@@ -2,7 +2,7 @@
     <div class="container">
         <div class="nav-left">
             <a class="nav-item" href="{{ url('/') }}">
-                <img src="/image/logo.png" class="image is-32x32" alt="CoffeeFun logo">
+                <img src="{{ Storage::url('images/logo.png') }}" class="image is-32x32" alt="CoffeeFun logo">
                 <h3 class="title is-3">&nbsp; CoffeeFake</h3>
             </a>
         </div>

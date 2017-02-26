@@ -1,7 +1,7 @@
 <article class="media">
     <figure class="media-left is-hidden-mobile">
         <p class="image is-128x128">
-            <img src="{{ $product->image }}" alt="{{ $product->title }}">
+            <img src="{{ $product->getImageUrl() }}" alt="{{ $product->title }}">
         </p>
     </figure>
 

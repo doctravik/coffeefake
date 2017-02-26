@@ -13,7 +13,7 @@
             <ul>
                 <li>
                     <a href="{{ route('cart.index') }}" class="content is-medium is-marginless">
-                        <img class="image is-24x24" src="/image/shopping-cart.svg"/>
+                        <img class="image is-24x24" src="{{ Storage::url('images/shopping-cart.svg') }}"/>
                         <span>&emsp; ({{ $cart->countProducts() }})</span>
                     </a>
                 </li>

@@ -5,7 +5,7 @@
             <article class="media">
                 <figure class="media-left">
                     <p class="image is-64x64">
-                        <img src="/image/smile_64.png">
+                        <img src="{{ Storage::url('images/smile_64.png') }}">
                     </p>
                 </figure>
                 <div class="media-content">

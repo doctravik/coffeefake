@@ -5,7 +5,7 @@
     <figure class="column is-narrow">
         <div class="media">
             <p class="image is-256x256 is-narrow">
-                <img src="{{ $product->image }}" alt="{{ $product->title }}">
+                <img src="{{ $product->getImageUrl() }}" alt="{{ $product->title }}">
             </p>
         </div>
     </figure>

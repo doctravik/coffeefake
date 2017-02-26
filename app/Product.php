@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -65,5 +66,15 @@ class Product extends Model
     public function priceInDollars()
     {
         return '$' . number_format($this->price / 100, 2);
+    }
+
+    /**
+     * Get full url to the product image.
+     * 
+     * @return string
+     */
+    public function getImageUrl()
+    {
+        return Storage::url('images/' . $this->image);
     }
 }
