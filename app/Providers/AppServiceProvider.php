@@ -17,9 +17,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(UrlGenerator $url)
     {
         if (env('APP_ENV') === 'production') {
-            $url->forceSchema('https');
+            $url->forceScheme('https');
         }
-        
+
         \App\Product::observe(\App\Observers\ProductObserver::class);
 
         view()->composer('*', function($view) {
