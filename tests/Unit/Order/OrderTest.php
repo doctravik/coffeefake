@@ -98,16 +98,19 @@ class OrderTest extends TestCase
     }
 
     /** @test */
-    public function it_can_find_all_orders_by_user()
+    public function it_can_find_all_orders_by_given_user()
     {
         $customerOne = factory(Customer::class)->create(['name' => 'John Doe', 'email' => 'johndoe@example.com']);
         $customerTwo = factory(Customer::class)->create(['name' => 'Garry Doe', 'email' => 'johndoe@example.com']);
+        $customerTree = factory(Customer::class)->create(['name' => 'Bob Doe', 'email' => 'bobdoe@example.com']);
         $orderOne = factory(Order::class)->create(['customer_id' => $customerOne->id]);
         $orderTwo = factory(Order::class)->create(['customer_id' => $customerTwo->id]);
+        $orderTree = factory(Order::class)->create(['customer_id' => $customerTree->id]);
 
         $orders = Order::byEmail('johndoe@example.com')->get();
 
         $this->assertTrue($orders->contains('id', $orderOne->id));
         $this->assertTrue($orders->contains('id', $orderTwo->id));
+        $this->assertFalse($orders->contains('id', $orderTree->id));
     }
 }
