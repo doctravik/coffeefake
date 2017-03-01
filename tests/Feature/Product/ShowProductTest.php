@@ -10,6 +10,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ShowProductTest extends TestCase
 {
+    use DatabaseTransactions;
+    
     /** @test */
     public function it_can_show_product_info()
     {

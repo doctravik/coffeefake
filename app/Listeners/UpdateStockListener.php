@@ -3,11 +3,11 @@
 namespace App\Listeners;
 
 use App\Events\OrderWasCreated;
-use App\Queries\UpdateProductStocks;
+use App\Queries\UpdateProductStock ;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class UpdateStock
+class UpdateStockListener
 {
     /**
      * Create the event listener.
@@ -27,7 +27,9 @@ class UpdateStock
      */
     public function handle(OrderWasCreated $event)
     {
-        (new UpdateProductStocks($event->cart->getAllProducts()))->update();
+        resolve(UpdateProductStock::class)
+            ->setProducts($event->cart->getAllProducts())
+            ->execute();
     }
 
 

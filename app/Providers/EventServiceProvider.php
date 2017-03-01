@@ -15,7 +15,7 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'App\Events\OrderWasCreated' => [
             'App\Listeners\MarkOrderPaid',
-            'App\Listeners\UpdateStock',
+            'App\Listeners\UpdateStockListener',
             'App\Listeners\EmptyCart',
         ],
         'App\Events\PaymentWasSuccessful' => [

@@ -6,8 +6,9 @@ use App\Cart;
 use App\Order;
 use App\Product;
 use Tests\TestCase;
-use App\Listeners\UpdateStock;
 use App\Events\OrderWasCreated;
+use App\Queries\UpdateProductStock;
+use App\Listeners\UpdateStockListener;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -26,9 +27,9 @@ class UpdateStockTest extends TestCase
         $order->addProduct($cart->getAllProducts());
 
         $orderWasCreated = new OrderWasCreated($order, $cart);
-        $updateStock = new UpdateStock();
+        $updateStockListener = new UpdateStockListener();
 
-        $updateStock->handle($orderWasCreated);
+        $updateStockListener->handle($orderWasCreated);
 
         $this->assertEquals(8, $product->fresh()->stock);
     }

@@ -47,5 +47,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(\App\Billing\PaymentGateway::class, function() {
             return new \App\Billing\StripePaymentGateway(config('services.stripe.secret'));
         });
+        
+        $this->app->bind('App\Queries\UpdateProductStock', function () {
+            return new \App\Queries\UpdateProductStockPostgres();
+        });
     }
 }

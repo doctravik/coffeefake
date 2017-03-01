@@ -4,7 +4,7 @@ namespace Tests\Unit\Queries;
 
 use App\Product;
 use Tests\TestCase;
-use App\Queries\UpdateProductStocks;
+use App\Queries\UpdateProductStock;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -20,9 +20,9 @@ class UpdateProductStocksTest extends TestCase
             $product->quantity = 3;
         });
 
-        (new UpdateProductStocks($products))->update();
+        resolve(UpdateProductStock::class)->setProducts($products)->execute();
 
-        $products->each(function($product) {
+        Product::all()->each(function($product) {
             $this->assertEquals(7, $product->stock);
         });
     }
