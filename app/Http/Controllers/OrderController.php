@@ -23,12 +23,9 @@ class OrderController extends Controller
         $this->cart = $cart;
 
         $this->paymentGateway = $paymentGateway;
-    }
 
-    // public function index()
-    // {
-    //     return view    
-    // }
+        $this->middleware('auth')->only('show');
+    }
 
     /**
      * Show order create form.

@@ -13,8 +13,8 @@
                         <p>
                             <strong>Congratulations!</strong>
                             <br>
-                            Your order was successfully proceeded. 
-                            But you should understand that there is no coffee without money. 
+                            Your order was successfully proceeded! But it is only joke!
+                            You should understand that there is no coffee without money. 
                             Don't upset. You have got new experience :)  
                         </p>
                     </div>

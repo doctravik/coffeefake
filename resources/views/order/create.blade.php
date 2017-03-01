@@ -44,8 +44,8 @@
 
         document.getElementById('payOrder').addEventListener('click', function(e) {
             stripe.open({
-                name: 'CoffeeFun',
-                description: 'Pay for your coffee',
+                name: 'CoffeeFake',
+                description: "Use test stripe card for fake payment",
                 email: document.getElementById('customer_email').value,
                 zipCode: true,
                 amount: {{ $cartSubtotal }}
